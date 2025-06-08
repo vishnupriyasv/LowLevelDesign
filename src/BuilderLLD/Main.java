@@ -2,29 +2,31 @@ package BuilderLLD;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        // Create a single StudentBuilder instance
-        StudentBuilder sb = new StudentBuilder();
+        // Reusable builder
+        Student.Builder sb = new Student.Builder();
 
-        // Build the first Student with mandatory fields: username, password, and age
-        Student s = sb.userName("priya").pswd("pasword@123").age(23).build();
-        System.out.println(s.toString());
+        // First student
+        Student s1 = sb.userName("priya").pswd("pasword@123").age(23).build();
+        System.out.println("Student 1:\n" + s1);
 
-        // Update the same builder with email and build again.
-        s = sb.email("priya@gmail.com").build();
-        System.out.println(s.toString());
-        
-        // Using the same builder instance, build another Student object
-        // Notice the builder still holds previous values like email unless overwritten
-        Student s2 = sb.userName("vp").pswd("pasword@123").age(24).build();
-        System.out.println(s2.toString());
+        //irst student updatin fields
+        s1 = sb.email("priya@gmail.com").build();
+        System.out.println("Student 1:\n" + s1);
 
+        // Reuse same builder and just set email
+        Student s2 = sb.email("priya@gmail.com").build();
+        System.out.println("Student 2:\n" + s2);
 
-        // Create a completely new StudentBuilder instance to start fresh
-        Student s3 = new StudentBuilder()
+        // Update some fields for a new student
+        Student s3 = sb.userName("vp").age(24).build();
+        System.out.println("Student 3:\n" + s3);
+
+        // Fresh new builder for independent student
+        Student s4 = new Student.Builder()
                 .userName("student3")
                 .pswd("password456")
                 .age(25)
                 .build();
-         System.out.println(s3.toString());
+        System.out.println("Student 4:\n" + s4);
     }
 }
